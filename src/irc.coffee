@@ -277,6 +277,9 @@ class IrcBot extends Adapter
       if process.env.HUBOT_IRC_PRIVATE
         return
 
+      user = self.createUser '', nick
+      user.room = ''
+
       if nick in options.ignoreUsers
         logger.info('Ignoring user: %s', nick)
         # we'll ignore this message if it's from someone we want to ignore
@@ -286,7 +289,7 @@ class IrcBot extends Adapter
       if message.slice(0, nameLength).toLowerCase() != options.nick.toLowerCase()
         message = "#{options.nick} #{message}"
 
-      self.receive new TextMessage({reply_to: nick, name: nick}, message)
+      self.receive new TextMessage({reply_to: nick, user: user, name: nick}, message)
 
     bot.addListener 'join', (channel, who) ->
       logger.info('%s has joined %s', who, channel)
