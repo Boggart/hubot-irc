@@ -278,7 +278,7 @@ class IrcBot extends Adapter
         return
 
       user = self.createUser '', nick
-      user.room = ''
+      user.room = null
 
       if nick in options.ignoreUsers
         logger.info('Ignoring user: %s', nick)
